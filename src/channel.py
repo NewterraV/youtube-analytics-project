@@ -12,19 +12,24 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
-        channel_dct = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        self.__channel_id = channel_id
+        channel_dct = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = channel_dct['items'][0]['snippet']['title']
         self.description = channel_dct['items'][0]['snippet']['description']
-        self.url = 'https://www.youtube.com/channel/' + self.channel_id
+        self.url = 'https://www.youtube.com/channel/' + self.__channel_id
         self.subs_count = channel_dct['items'][0]['statistics']['subscriberCount']
         self.video_count = channel_dct['items'][0]['statistics']['videoCount']
         self.view_count = channel_dct['items'][0]['statistics']['viewCount']
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         return print(json.dumps(channel, indent=2, ensure_ascii=False))
+
+    @property
+    def channel_id(self):
+        """Возвращает __channel_id"""
+        return self.__channel_id
 
     @staticmethod
     def get_service():
@@ -33,7 +38,7 @@ class Channel:
 
     def to_json(self, filename):
         path_file = os.path.join(PATH_DIR_HOME, 'data', 'channels', filename)
-        data = {'channel_id': self.channel_id,
+        data = {'channel_id': self.__channel_id,
                 'title': self.title,
                 'description': self.description,
                 'url': self.url,
