@@ -1,4 +1,5 @@
 from src.channel import Channel
+from src.cnst import PATH_DIR_HOME
 import pytest
 
 
@@ -6,6 +7,11 @@ import pytest
 def get_item():
     """Фикстура экземпляра класса"""
     return Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
+
+
+@pytest.fixture
+def get_path_dir_home():
+    return PATH_DIR_HOME
 
 
 def test_channel(get_item):
@@ -26,3 +32,7 @@ def test_print_info(get_item):
 def test_get_service(get_item):
     """Тест функции get_service()"""
     assert get_item.get_service() is not None
+
+
+def test_to_json(get_item):
+    assert get_item.to_json('test.json') is None
