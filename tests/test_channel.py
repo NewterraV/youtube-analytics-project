@@ -9,6 +9,12 @@ def get_item():
     return Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
 
 
+@pytest.fixture()
+def get_item2():
+    """Фикстура дополнительного экземпляра класса"""
+    return Channel('UC1eFXmJNkjITxPFWTy6RsWg')
+
+
 @pytest.fixture
 def get_path_dir_home():
     return PATH_DIR_HOME
@@ -36,3 +42,25 @@ def test_get_service(get_item):
 
 def test_to_json(get_item):
     assert get_item.to_json('test.json') is None
+
+
+def test_str(get_item):
+    """TestCase __str__"""
+    assert str(get_item) == 'вДудь (https://www.youtube.com/channel/UCMCgOm8GZkHp8zJ6l7_hIuA)'
+
+
+def test_repr(get_item):
+    """TestCase __repr__"""
+    assert repr(get_item) == 'Channel("вДудь", "UCMCgOm8GZkHp8zJ6l7_hIuA", 10300000)'
+
+
+def test_add(get_item, get_item2):
+    """TestCase операций сложения, вычитания и сравнения"""
+    assert get_item + get_item2 == 10300000 + 3740000
+    assert get_item - get_item2 == 6560000
+    assert get_item2 - get_item == -6560000
+    # assert get_item > get_item2 is True
+    # assert get_item >= get_item2 is True
+    # assert get_item < get_item2 is False
+    # assert get_item <= get_item2 is False
+    # assert get_item == get_item2 is False
