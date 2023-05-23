@@ -23,3 +23,11 @@ class Video:
     def video_id(self):
         """возвращает значение __video_id"""
         return self.__video_id
+
+
+class PLVideo(Video):
+    """Класс плейлиста, наследуется от Video"""
+
+    def __init__(self, video_id, pl_id):
+        super().__init__(video_id)
+        self.playlist_id = pl_id
