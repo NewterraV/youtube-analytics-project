@@ -11,6 +11,7 @@ googleapis-common-protos==1.59.0
 httplib2==0.22.0
 idna==3.4
 iniconfig==2.0.0
+isodate==0.6.1
 packaging==23.1
 pluggy==1.0.0
 protobuf==4.23.0
