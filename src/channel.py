@@ -1,19 +1,17 @@
 import json
-from googleapiclient.discovery import build
 import os
 from src.cnst import PATH_DIR_HOME
+from src.youtubeapi import YouTubeAPI
 
 
-class Channel:
+class Channel(YouTubeAPI):
     """Класс для ютуб-канала"""
-
-    api_key: str = os.getenv('YT_API')
-    youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
+        super().__init__()
         self.__channel_id = channel_id
-        channel_dct = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        channel_dct = self.get_channel_data(self.__channel_id)
         self.title = channel_dct['items'][0]['snippet']['title']
         self.description = channel_dct['items'][0]['snippet']['description']
         self.url = 'https://www.youtube.com/channel/' + self.__channel_id
@@ -45,21 +43,15 @@ class Channel:
     def __ge__(self, other):
         return int(self.subs_count) >= int(other.subs_count)
 
-
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        channel = self.get_channel_data(self.__channel_id)
         return print(json.dumps(channel, indent=2, ensure_ascii=False))
 
     @property
     def channel_id(self):
         """Возвращает __channel_id"""
         return self.__channel_id
-
-    @staticmethod
-    def get_service():
-        """Возвращает объект для работы с YouTube API"""
-        return build('youtube', 'v3', developerKey=os.getenv('YT_API'))
 
     def to_json(self, filename):
         path_file = os.path.join(PATH_DIR_HOME, 'data', 'channels', filename)
