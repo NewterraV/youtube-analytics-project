@@ -55,8 +55,8 @@ class PlayList(YouTubeAPI):
 
     def get_title(self, pl_videos):
         """Получает имя плейлиста на основе его ID"""
-        self.__channel_id = pl_videos["items"][0]["snippet"]["channelId"]
-        lst_pl = self.get_playlists(self.__channel_id)
+        channel_id = pl_videos["items"][0]["snippet"]["channelId"]
+        lst_pl = self.get_playlists(channel_id)
         pl_dict = {}
         for i in lst_pl['items']:
             pl_dict[i['id']] = i['snippet']['title']
