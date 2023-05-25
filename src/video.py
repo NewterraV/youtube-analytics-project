@@ -1,13 +1,13 @@
-from src.channel import Channel
+from src.youtubeapi import YouTubeAPI
 
 
-class Video:
+class Video(YouTubeAPI):
     """Класс работающий со статисткой видео по Id"""
 
     def __init__(self, video_id):
-        response = Channel.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                       id=video_id).execute()
+        super().__init__()
         self.__video_id = video_id
+        response = self.get_video_data(self.__video_id)
         self.title = response['items'][0]['snippet']['title']
         self.url = 'https://youtu.be/' + video_id
         self.view_count = int(response['items'][0]['statistics']['viewCount'])

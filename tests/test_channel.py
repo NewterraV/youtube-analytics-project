@@ -59,8 +59,8 @@ def test_add(get_item, get_item2):
     assert get_item + get_item2 == 10300000 + 3740000
     assert get_item - get_item2 == 6560000
     assert get_item2 - get_item == -6560000
-    # assert get_item > get_item2 is True
-    # assert get_item >= get_item2 is True
-    # assert get_item < get_item2 is False
-    # assert get_item <= get_item2 is False
-    # assert get_item == get_item2 is False
+    assert str(get_item > get_item2) == "True"
+    assert str(get_item >= get_item2) == 'True'
+    assert str(get_item < get_item2) == 'False'
+    assert str(get_item <= get_item2) == 'False'
+    assert str(get_item == get_item2) == 'False'
