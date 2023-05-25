@@ -21,6 +21,12 @@ class PlayList(YouTubeAPI):
         self.title = self.get_title(pl_videos)
         self.url = 'https://www.youtube.com/playlist?list=' + self.__pl_id
 
+    def __repr__(self):
+        return f'{self.__class__.__name__}("{self.__pl_id}", "{self.title}"'
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
     @property
     def total_duration(self):
         """Возвращает объект класса datetime.timedelta с суммарной длительность плейлиста"""
