@@ -7,11 +7,18 @@ class Video(YouTubeAPI):
     def __init__(self, video_id):
         super().__init__()
         self.__video_id = video_id
-        response = self.get_video_data(self.__video_id)
-        self.title = response['items'][0]['snippet']['title']
-        self.url = 'https://youtu.be/' + video_id
-        self.view_count = int(response['items'][0]['statistics']['viewCount'])
-        self.like_count = int(response['items'][0]['statistics']['likeCount'])
+        try:
+            response = self.get_video_data(self.__video_id)
+            self.title = response['items'][0]['snippet']['title']
+            self.url = 'https://youtu.be/' + video_id
+            self.view_count = int(response['items'][0]['statistics']['viewCount'])
+            self.like_count = int(response['items'][0]['statistics']['likeCount'])
+        except IndexError:
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
+
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.__video_id}, {self.title})'

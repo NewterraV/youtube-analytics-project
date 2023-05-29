@@ -5,7 +5,7 @@ from src.video import Video, PLVideo
 
 @pytest.fixture
 def get_expml():
-    return Video('9lO06Zxhu88')
+    return Video('9lO06Zxhu88'), Video('grgdgrgrgrgr')
 
 
 @pytest.fixture
@@ -15,21 +15,24 @@ def get_exmpl_pl():
 
 def test_video(get_expml):
     """Тест инициализации класса Video"""
-    assert get_expml.video_id == '9lO06Zxhu88'
-    assert get_expml.title == "Как устроена IT-столица мира / Russian Silicon Valley (English subs)"
-    assert get_expml.url == 'https://youtu.be/9lO06Zxhu88'
-    assert int(get_expml.view_count) >= 49661421
-    assert int(get_expml.like_count) >= 978113
+    assert get_expml[0].video_id == '9lO06Zxhu88'
+    assert get_expml[0].title == "Как устроена IT-столица мира / Russian Silicon Valley (English subs)"
+    assert get_expml[0].url == 'https://youtu.be/9lO06Zxhu88'
+    assert int(get_expml[0].view_count) >= 49661421
+    assert int(get_expml[0].like_count) >= 978113
+    assert get_expml[1].video_id == 'grgdgrgrgrgr'
+    assert get_expml[1].title is None
+    assert get_expml[1].url is None
 
 
 def test_repr(get_expml):
     """Тест repr"""
-    assert repr(get_expml) == 'Video(9lO06Zxhu88, Как устроена IT-столица мира / Russian Silicon Valley (English subs))'
+    assert repr(get_expml[0]) == 'Video(9lO06Zxhu88, Как устроена IT-столица мира / Russian Silicon Valley (English subs))'
 
 
 def test_str(get_expml):
     """ Тест str класса Video"""
-    assert str(get_expml) == 'Как устроена IT-столица мира / Russian Silicon Valley (English subs)'
+    assert str(get_expml[0]) == 'Как устроена IT-столица мира / Russian Silicon Valley (English subs)'
 
 
 def test_plvideo(get_exmpl_pl):
